@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lab Exam Codes</title>
+
+    <style>
+
+        body{
+            font-family: Arial;
+            background:#f2f2f2;
+            padding:20px;
+        }
+
+        h1{
+            text-align:center;
+            color:darkblue;
+        }
+
+        .box{
+            background:white;
+            padding:20px;
+            margin-bottom:20px;
+            border-radius:10px;
+            box-shadow:0px 0px 10px gray;
+        }
+
+        h2{
+            color:#333;
+        }
+
+        pre{
+            background:black;
+            color:lime;
+            padding:15px;
+            border-radius:8px;
+            overflow:auto;
+            font-size:15px;
+        }
+
+        button{
+            background:blue;
+            color:white;
+            border:none;
+            padding:10px 15px;
+            border-radius:5px;
+            cursor:pointer;
+            margin-top:10px;
+        }
+
+        button:hover{
+            background:darkblue;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<h1>Neural Network</h1>
+
+<!-- Question 1 -->
+<!-- TensorFlow Vector Addition -->
+<div class="box">
+    
+
+    <h2>1. TensorFlow Vector Addition</h2>
+    <button onclick="copyCode('code1')">
+    Copy Code
+    </button>
+
+<pre id="code1">
+# Simple Vector Addition using TensorFlow
+
+import tensorflow as tf
+
+# Define two vectors
+a = tf.constant([1, 2, 3])
+b = tf.constant([4, 5, 6])
+
+# Perform vector addition
+result = tf.add(a, b)
+
+# Display the result
+print("a :", a.numpy())
+print("b :", b.numpy())
+print("Addition Result :", result.numpy())
+</pre>
+
+</div>
+
+
+<!-- Keras Regression Model -->
+<div class="box">
+    <h2>2. Regression Model in Keras for Hospital Management</h2>
+    <button onclick="copyCode('code2')">
+    Copy Code
+    </button>
+
+<pre id="code2">
+# Regression Model in Keras for Hospital Management
+# Predicting old patient visit count based on age and disease severity
+
+import numpy as np
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense
+
+# Input Data
+# [Age, Disease Severity]
+
+X = np.array([
+    [25, 2],
+    [30, 3],
+    [35, 4],
+    [40, 5],
+    [45, 6],
+    [50, 7]
+], dtype=float)
+
+# Output Data
+# Number of old patient visits
+
+y = np.array([1, 2, 3, 4, 5, 6], dtype=float)
+
+# Create Regression Model
+
+model = Sequential()
+
+# Hidden Layer
+model.add(Dense(8, input_dim=2, activation='relu'))
+
+# Output Layer
+model.add(Dense(1))
+
+# Compile Model
+
+model.compile(
+    optimizer='adam',
+    loss='mean_squared_error'
+)
+
+# Train Model
+
+model.fit(X, y, epochs=200, verbose=0)
+
+# Test Data
+
+test = np.array([[38, 5]])
+
+# Predict Old Patient Data
+
+prediction = model.predict(test)
+
+# Display Result
+
+print("Predicted Old Patient Visits :",
+      prediction[0][0])
+</pre>
+
+</div>
+
+
+<!-- Question 3 -->
+<div class="box">
+    <h2>3. Single Layer Perceptron using TensorFlow/Keras</h2>
+    <button onclick="copyCode('code18')">
+    Copy Code
+    </button>
+
+<pre id="code18">
+# Single Layer Perceptron using TensorFlow/Keras
+# AND Gate Implementation
+
+# Import necessary libraries
+
+import numpy as np
+from tensorflow import keras
+from tensorflow.keras import layers
+
+# Input data
+
+X = np.array([
+    [0,0],
+    [0,1],
+    [1,0],
+    [1,1]
+])
+
+# AND gate output
+
+Y = np.array([
+    0,
+    0,
+    0,
+    1
+])
+
+# Create model
+
+model = keras.Sequential([
+
+    # Input layer
+    layers.Input(shape=(2,)),
+
+    # Single layer perceptron
+    layers.Dense(1, activation='sigmoid')
+])
+
+# Compile model
+
+model.compile(
+    optimizer='sgd',
+    loss='binary_crossentropy',
+    metrics=['accuracy']
+)
+
+# Train model
+
+model.fit(X, Y, epochs=500, verbose=0)
+
+# Predict outputs
+
+pred = model.predict(X)
+
+print("\nPredicted Outputs:")
+
+for i in range(4):
+
+    if pred[i][0] >= 0.5:
+        output = 1
+    else:
+        output = 0
+
+    print(X[i], "=", output)
+</pre>
+
+
+</div>
+
+<!-- Question 4 -->
+<div class="box">
+    <h2>4. Feed Forward Neural Network</h2>
+    <button onclick="copyCode('code19')">
+    Copy Code
+    </button>
+
+<pre id="code19">
+# Feed Forward Neural Network
+
+import numpy as np
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense
+
+# Input and output data
+
+X = np.array([
+    [0,0],
+    [0,1],
+    [1,0],
+    [1,1]
+])
+
+y = np.array([
+    [0],
+    [1],
+    [1],
+    [0]
+])
+
+# Feed-Forward Network
+
+model = Sequential([
+
+    Dense(4,
+          activation='relu',
+          input_dim=2),
+
+    Dense(1,
+          activation='sigmoid')
+])
+
+# Compile and train
+
+model.compile(
+    optimizer='adam',
+    loss='binary_crossentropy',
+    metrics=['accuracy']
+)
+
+model.fit(X, y, epochs=500, verbose=0)
+
+# Prediction
+
+prediction = model.predict(X)
+
+# Convert decimal to integer
+
+output = (prediction > 0.5).astype(int)
+
+print("Prediction Outputs:")
+
+print(output)
+</pre>
+
+
+</div>
+
+<!-- Question 5 -->
+<div class="box">
+    <h2>5. Image Classifier using CNN in TensorFlow/Keras</h2>
+    <button onclick="copyCode('code20')">
+    Copy Code
+    </button>
+
+<pre id="code20">
+# Image Classifier using CNN in TensorFlow/Keras
+
+import tensorflow as tf
+from tensorflow.keras import datasets, layers, models
+
+# Load MNIST Dataset
+
+(x_train, y_train), (x_test, y_test) =
+datasets.mnist.load_data()
+
+# Normalize Data
+
+x_train = x_train / 255.0
+x_test = x_test / 255.0
+
+# Reshape Data for CNN
+
+x_train = x_train.reshape(
+    60000, 28, 28, 1)
+
+x_test = x_test.reshape(
+    10000, 28, 28, 1)
+
+# Build CNN Model
+
+model = models.Sequential([
+
+    # Convolution Layer
+
+    layers.Conv2D(
+        32,
+        (3,3),
+        activation='relu',
+        input_shape=(28,28,1)
+    ),
+
+    # Pooling Layer
+
+    layers.MaxPooling2D((2,2)),
+
+    # Flatten Layer
+
+    layers.Flatten(),
+
+    # Output Layer
+
+    layers.Dense(
+        10,
+        activation='softmax'
+    )
+])
+
+# Compile Model
+
+model.compile(
+    optimizer='adam',
+    loss='sparse_categorical_crossentropy',
+    metrics=['accuracy']
+)
+
+# Train Model
+
+model.fit(
+    x_train,
+    y_train,
+    epochs=5
+)
+
+# Evaluate Model
+
+loss, accuracy =
+model.evaluate(x_test, y_test)
+
+# Print Accuracy
+
+print("Accuracy:", accuracy)
+</pre>
+
+
+</div>
+
+<!-- Question 6 -->
+<div class="box">
+    <h2>6. Fine Tuning Hyperparameters in Deep Learning using Keras</h2>
+    <button onclick="copyCode('code21')">
+    Copy Code
+    </button>
+
+<pre id="code21">
+# Fine Tuning Hyperparameters in Deep Learning using Keras
+
+import numpy as np
+
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense
+from tensorflow.keras.optimizers import Adam
+
+# Input Data
+
+X = np.array([
+    [0,0],
+    [0,1],
+    [1,0],
+    [1,1]
+])
+
+# Output Data (AND Gate)
+
+y = np.array([
+    [0],
+    [0],
+    [0],
+    [1]
+])
+
+# Create Model
+
+model = Sequential()
+
+# Hidden Layer
+
+model.add(
+    Dense(
+        8,
+        activation='relu',
+        input_dim=2
+    )
+)
+
+# Output Layer
+
+model.add(
+    Dense(
+        1,
+        activation='sigmoid'
+    )
+)
+
+# Hyperparameter Tuning
+
+# Compile Model
+
+model.compile(
+    optimizer='Adam',
+    loss='binary_crossentropy',
+    metrics=['accuracy']
+)
+
+# Train Model
+# Epochs and Batch Size are hyperparameters
+
+model.fit(
+    X,
+    y,
+    epochs=200,
+    batch_size=1,
+    verbose=1
+)
+
+# Test Model
+
+loss, accuracy = model.evaluate(X, y)
+
+print("Accuracy :", accuracy)
+
+# Prediction
+
+pred = model.predict(X)
+
+print("Predicted Output:")
+
+print(pred.round())
+</pre>
+
+
+</div>
+<!-- Question 7 -->
+<div class="box">
+    <h2>7. Transfer Learning using image classification</h2>
+    <button onclick="copyCode('code22')">
+    Copy Code
+    </button>
+
+<pre id="code22">
+# Transfer Learning for Image Classification
+# using MobileNetV2
+
+import tensorflow as tf
+
+from tensorflow.keras.applications import MobileNetV2
+
+from tensorflow.keras.models import Sequential
+
+from tensorflow.keras.layers import Dense, Flatten
+
+from tensorflow.keras.datasets import cifar10
+
+from tensorflow.keras.utils import to_categorical
+
+# Load CIFAR-10 Dataset
+
+(x_train, y_train), (x_test, y_test) =
+cifar10.load_data()
+
+# Normalize Data
+
+x_train = x_train / 255.0
+x_test = x_test / 255.0
+
+# Resize Images to 96x96
+
+x_train = tf.image.resize(x_train, (96, 96))
+
+x_test = tf.image.resize(x_test, (96, 96))
+
+# Convert Labels to Categorical
+
+y_train = to_categorical(y_train, 10)
+
+y_test = to_categorical(y_test, 10)
+
+# Load Pre-trained MobileNetV2 Model
+
+base_model = MobileNetV2(
+    weights='imagenet',
+    include_top=False,
+    input_shape=(96, 96, 3)
+)
+
+# Freeze Pre-trained Layers
+
+base_model.trainable = False
+
+# Build Transfer Learning Model
+
+model = Sequential([
+
+    base_model,
+
+    Flatten(),
+
+    Dense(128, activation='relu'),
+
+    Dense(10, activation='softmax')
+])
+
+# Compile Model
+
+model.compile(
+    optimizer='adam',
+    loss='categorical_crossentropy',
+    metrics=['accuracy']
+)
+
+# Train Model
+
+model.fit(
+    x_train,
+    y_train,
+    epochs=3,
+    batch_size=32
+)
+
+# Evaluate Model
+
+loss, accuracy =
+model.evaluate(x_test, y_test)
+
+# Print Accuracy
+
+print("Test Accuracy:", accuracy)
+</pre>
+
+
+</div>
+<!-- Question 8 -->
+<div class="box">
+    <h2>8. Transfer Learning using MobileNetV2</h2>
+    <button onclick="copyCode('code29')">
+    Copy Code
+    </button>
+
+<pre id="code29">
+# Transfer Learning for Image Classification
+# using MobileNetV2
+
+import tensorflow as tf
+
+from tensorflow.keras.applications import MobileNetV2
+
+from tensorflow.keras.models import Sequential
+
+from tensorflow.keras.layers import Dense, Flatten
+
+from tensorflow.keras.datasets import cifar10
+
+from tensorflow.keras.utils import to_categorical
+
+# Load CIFAR-10 Dataset
+
+(x_train, y_train), (x_test, y_test) =
+cifar10.load_data()
+
+# Normalize Data
+
+x_train = x_train / 255.0
+x_test = x_test / 255.0
+
+# Resize Images to 96x96
+
+x_train = tf.image.resize(x_train, (96, 96))
+
+x_test = tf.image.resize(x_test, (96, 96))
+
+# Convert Labels to Categorical
+
+y_train = to_categorical(y_train, 10)
+
+y_test = to_categorical(y_test, 10)
+
+# Load Pre-trained MobileNetV2 Model
+
+base_model = MobileNetV2(
+    weights='imagenet',
+    include_top=False,
+    input_shape=(96, 96, 3)
+)
+
+# Freeze Pre-trained Layers
+
+base_model.trainable = False
+
+# Build Transfer Learning Model
+
+model = Sequential([
+
+    base_model,
+
+    Flatten(),
+
+    Dense(128, activation='relu'),
+
+    Dense(10, activation='softmax')
+])
+
+# Compile Model
+
+model.compile(
+    optimizer='adam',
+    loss='categorical_crossentropy',
+    metrics=['accuracy']
+)
+
+# Train Model
+
+model.fit(
+    x_train,
+    y_train,
+    epochs=3,
+    batch_size=32
+)
+
+# Evaluate Model
+
+loss, accuracy =
+model.evaluate(x_test, y_test)
+
+# Print Accuracy
+
+print("Test Accuracy:", accuracy)
+</pre>
+
+
+</div>
+
+<!-- Question 9 -->
+<div class="box">
+    <h2>9. Sentiment Analysis using RNN</h2>
+    <button onclick="copyCode('code23')">
+    Copy Code
+    </button>
+
+<pre id="code23">
+
+# Sentiment Analysis using RNN
+
+import tensorflow as tf
+
+from tensorflow.keras.datasets import imdb
+
+from tensorflow.keras.models import Sequential
+
+from tensorflow.keras.layers import (
+    Embedding,
+    SimpleRNN,
+    Dense
+)
+
+from tensorflow.keras.preprocessing.sequence import (
+    pad_sequences
+)
+
+# Load IMDB Dataset
+
+(x_train, y_train), (x_test, y_test) =
+imdb.load_data(num_words=5000)
+
+# Pad Sequences
+
+x_train = pad_sequences(
+    x_train,
+    maxlen=100
+)
+
+x_test = pad_sequences(
+    x_test,
+    maxlen=100
+)
+
+# Build RNN Model
+
+model = Sequential([
+
+    Embedding(
+        5000,
+        32,
+        input_length=100
+    ),
+
+    SimpleRNN(32),
+
+    Dense(
+        1,
+        activation='sigmoid'
+    )
+])
+
+# Compile Model
+
+model.compile(
+    optimizer='adam',
+    loss='binary_crossentropy',
+    metrics=['accuracy']
+)
+
+# Train Model
+
+model.fit(
+    x_train,
+    y_train,
+    epochs=2,
+    batch_size=64
+)
+
+# Test Accuracy
+
+loss, accuracy =
+model.evaluate(x_test, y_test)
+
+# Print Accuracy
+
+print("Accuracy:", accuracy)
+</pre>
+
+
+</div>
+
+<!-- Question 10 -->
+<div class="box">
+    <h2>10. LSTM Autoencoder using TensorFlow/Keras</h2>
+    <button onclick="copyCode('code24')">
+    Copy Code
+    </button>
+
+<pre id="code24">
+# LSTM Autoencoder using TensorFlow/Keras
+
+import numpy as np
+
+from tensorflow.keras.models import Sequential
+
+from tensorflow.keras.layers import (
+    LSTM,
+    RepeatVector,
+    TimeDistributed,
+    Dense
+)
+
+# Sample Data
+
+X = np.array([
+
+    [[1],[2],[3],[4],[5]],
+
+    [[2],[3],[4],[5],[6]],
+
+    [[3],[4],[5],[6],[7]],
+
+    [[4],[5],[6],[7],[8]]
+])
+
+# Create Model
+
+model = Sequential()
+
+# Encoder
+
+model.add(
+    LSTM(
+        64,
+        activation='relu',
+        input_shape=(5,1)
+    )
+)
+
+# Bottleneck
+
+model.add(RepeatVector(5))
+
+# Decoder
+
+model.add(
+    LSTM(
+        64,
+        activation='relu',
+        return_sequences=True
+    )
+)
+
+# Output Layer
+
+model.add(
+    TimeDistributed(Dense(1))
+)
+
+# Compile Model
+
+model.compile(
+    optimizer='adam',
+    loss='mse'
+)
+
+# Train Model
+
+model.fit(
+    X,
+    X,
+    epochs=100,
+    verbose=1
+)
+
+# Predict Output
+
+output = model.predict(X)
+
+print("Reconstructed Output:")
+
+print(output)
+</pre>
+
+
+</div>
+
+<!-- Question 11 -->
+<div class="box">
+    <h2>11. Generating Images using GAN</h2>
+    <button onclick="copyCode('code25')">
+    Copy Code
+    </button>
+
+<pre id="code25">
+# Generating Images using GAN
+# (Generative Adversarial Network)
+
+import tensorflow as tf
+
+from tensorflow.keras import layers
+
+import numpy as np
+
+import matplotlib.pyplot as plt
+
+# Create Generator Model
+
+generator = tf.keras.Sequential([
+
+    layers.Dense(
+        128,
+        activation='relu',
+        input_shape=(100,)
+    ),
+
+    layers.Dense(
+        784,
+        activation='sigmoid'
+    ),
+
+    layers.Reshape((28, 28))
+])
+
+# Create Discriminator Model
+
+discriminator = tf.keras.Sequential([
+
+    layers.Flatten(
+        input_shape=(28, 28)
+    ),
+
+    layers.Dense(
+        128,
+        activation='relu'
+    ),
+
+    layers.Dense(
+        1,
+        activation='sigmoid'
+    )
+])
+
+# Compile Discriminator
+
+discriminator.compile(
+    optimizer='adam',
+    loss='binary_crossentropy',
+    metrics=['accuracy']
+)
+
+# Combine GAN
+
+discriminator.trainable = False
+
+gan = tf.keras.Sequential([
+    generator,
+    discriminator
+])
+
+# Compile GAN
+
+gan.compile(
+    optimizer='adam',
+    loss='binary_crossentropy'
+)
+
+# Generate Random Noise
+
+noise = np.random.normal(
+    0,
+    1,
+    (1, 100)
+)
+
+# Generate Fake Image
+
+generated_image =
+generator.predict(noise)
+
+# Display Image
+
+plt.imshow(
+    generated_image[0],
+    cmap='gray'
+)
+
+plt.title("Generated Image")
+
+plt.show()
+</pre>
+
+
+</div>
+
+
+<script>
+
+function copyCode(id)
+{
+    let text = document.getElementById(id).innerText;
+
+    navigator.clipboard.writeText(text);
+
+    alert("Code Copied!");
+}
+
+</script>
+
+</body>
+</html>
