@@ -689,18 +689,13 @@ print("Test Accuracy:", accuracy)
 
 <!-- Question 9 -->
 <div class="box">
-    <h2>9. Sentiment Analysis using RNN</h2>
-    <button onclick="copyCode('code23')">
+    <h2>9. Simple Sentiment Analysis using RNN</h2>
+    <button onclick="copyCode('code26')">
     Copy Code
     </button>
 
-<pre id="code23">
-
-# Sentiment Analysis using RNN
-
-import tensorflow as tf
-
-from tensorflow.keras.datasets import imdb
+<pre id="code26">
+import numpy as np
 
 from tensorflow.keras.models import Sequential
 
@@ -710,38 +705,56 @@ from tensorflow.keras.layers import (
     Dense
 )
 
+from tensorflow.keras.preprocessing.text import (
+    Tokenizer
+)
+
 from tensorflow.keras.preprocessing.sequence import (
     pad_sequences
 )
 
-# Load IMDB Dataset
+# Text Data
 
-(x_train, y_train), (x_test, y_test) =
-imdb.load_data(num_words=5000)
+texts = [
+    "good",
+    "bad",
+    "excellent",
+    "worst"
+]
 
-# Pad Sequences
+# Labels
 
-x_train = pad_sequences(
-    x_train,
-    maxlen=100
+labels = np.array([
+    1,
+    0,
+    1,
+    0
+])
+
+# Tokenization
+
+tokenizer = Tokenizer()
+
+tokenizer.fit_on_texts(texts)
+
+# Convert Text to Sequence
+
+X = pad_sequences(
+    tokenizer.texts_to_sequences(texts),
+    maxlen=1
 )
 
-x_test = pad_sequences(
-    x_test,
-    maxlen=100
-)
-
-# Build RNN Model
+# Create Model
 
 model = Sequential([
 
     Embedding(
-        5000,
-        32,
-        input_length=100
+        10,
+        8,
+        input_length=1
     ),
 
-    SimpleRNN(32),
+    SimpleRNN(8),
 
     Dense(
         1,
@@ -760,16 +773,15 @@ model.compile(
 # Train Model
 
 model.fit(
-    x_train,
-    y_train,
-    epochs=2,
-    batch_size=64
+    X,
+    labels,
+    epochs=50
 )
 
-# Test Accuracy
+# Evaluate Model
 
 loss, accuracy =
-model.evaluate(x_test, y_test)
+model.evaluate(X, labels)
 
 # Print Accuracy
 
@@ -781,14 +793,12 @@ print("Accuracy:", accuracy)
 
 <!-- Question 10 -->
 <div class="box">
-    <h2>10. LSTM Autoencoder using TensorFlow/Keras</h2>
-    <button onclick="copyCode('code24')">
+    <h2>10. LSTM Autoencoder using Keras</h2>
+    <button onclick="copyCode('code27')">
     Copy Code
     </button>
 
-<pre id="code24">
-# LSTM Autoencoder using TensorFlow/Keras
-
+<pre id="code27">
 import numpy as np
 
 from tensorflow.keras.models import Sequential
@@ -800,52 +810,37 @@ from tensorflow.keras.layers import (
     Dense
 )
 
-# Sample Data
+# Input Data
 
 X = np.array([
 
-    [[1],[2],[3],[4],[5]],
+    [[1],[2],[3]],
 
-    [[2],[3],[4],[5],[6]],
+    [[2],[3],[4]],
 
-    [[3],[4],[5],[6],[7]],
-
-    [[4],[5],[6],[7],[8]]
+    [[3],[4],[5]]
 ])
 
 # Create Model
 
-model = Sequential()
+model = Sequential([
 
-# Encoder
-
-model.add(
     LSTM(
-        64,
-        activation='relu',
-        input_shape=(5,1)
-    )
-)
+        8,
+        input_shape=(3,1)
+    ),
 
-# Bottleneck
+    RepeatVector(3),
 
-model.add(RepeatVector(5))
-
-# Decoder
-
-model.add(
     LSTM(
-        64,
-        activation='relu',
+        8,
         return_sequences=True
+    ),
+
+    TimeDistributed(
+        Dense(1)
     )
-)
-
-# Output Layer
-
-model.add(
-    TimeDistributed(Dense(1))
-)
+])
 
 # Compile Model
 
@@ -859,15 +854,12 @@ model.compile(
 model.fit(
     X,
     X,
-    epochs=100,
-    verbose=1
+    epochs=50
 )
 
 # Predict Output
 
 output = model.predict(X)
-
-print("Reconstructed Output:")
 
 print(output)
 </pre>
